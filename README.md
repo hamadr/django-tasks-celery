@@ -46,6 +46,6 @@ result = send_email.enqueue(to="user@example.com", subject="Hello", body="World"
 
 ## Compatibility
 
-- **Django**: 6.0+
+- **Django**: 6.0+ (or 5.2 with [django-tasks](https://github.com/RealOrangeOne/django-tasks))
 - **Celery**: 5.4+ (or celery-asyncio)
 - **Python**: 3.12+

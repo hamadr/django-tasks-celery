@@ -7,13 +7,12 @@ from datetime import UTC, datetime
 from typing import Any
 
 from django.core import checks
-from django.tasks.backends.base import BaseTaskBackend
-from django.tasks.base import Task, TaskResult, TaskResultStatus
-from django.tasks.signals import task_enqueued
 from django.utils.module_loading import import_string
 
 from django_tasks_celery.register import ensure_celery_task
 from django_tasks_celery.results import meta_to_task_result
+
+from .compat import BaseTaskBackend, BaseTaskResult, Task, TaskResultStatus, task_enqueued
 
 logger = logging.getLogger(__name__)
 
@@ -81,7 +80,7 @@ class CeleryBackend(BaseTaskBackend):
 
         return options
 
-    def enqueue[**P, R](self, task: Task[P, R], args: Any, kwargs: Any) -> TaskResult[P, R]:
+    def enqueue[**P, R](self, task: Task[P, R], args: Any, kwargs: Any) -> BaseTaskResult[P, R]:
         self.validate_task(task)
         app = self._get_celery_app()
         ensure_celery_task(task, app, self)
@@ -94,7 +93,7 @@ class CeleryBackend(BaseTaskBackend):
             **options,
         )
 
-        task_result = TaskResult(
+        task_result = BaseTaskResult(
             task=task,
             id=celery_result.id,
             status=TaskResultStatus.READY,
@@ -111,7 +110,7 @@ class CeleryBackend(BaseTaskBackend):
         task_enqueued.send(sender=type(self), task_result=task_result)
         return task_result
 
-    def get_result(self, result_id: str) -> TaskResult[..., Any]:
+    def get_result(self, result_id: str) -> BaseTaskResult[..., Any]:
         from django_tasks_celery.register import _django_task_registry
 
         app = self._get_celery_app()

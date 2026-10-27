@@ -18,8 +18,8 @@ from typing import TYPE_CHECKING, Any
 
 from asgiref.sync import async_to_sync
 from celery import _state, current_task
-from django.tasks.base import Task, TaskContext, TaskError, TaskResult, TaskResultStatus
-from django.tasks.signals import task_finished, task_started
+
+from .compat import BaseTaskResult, Task, TaskContext, TaskError, TaskResultStatus, task_finished, task_started
 
 if TYPE_CHECKING:
     from django_tasks_celery.backend import CeleryBackend
@@ -76,7 +76,7 @@ def _make_run_fn(task: Task[..., Any], backend: CeleryBackend) -> Any:
         worker_ids = [worker_hostname] if worker_hostname else []
         now = datetime.now(UTC)
 
-        task_result = TaskResult(
+        task_result = BaseTaskResult(
             task=task,
             id=result_id,
             status=TaskResultStatus.RUNNING,

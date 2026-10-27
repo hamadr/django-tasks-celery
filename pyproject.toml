@@ -25,11 +25,15 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Typing :: Typed",
 ]
-dependencies = ["Django>=6.0,<7"]
+dependencies = ["Django>=5.2,<7"]
 
 [project.optional-dependencies]
 celery = ["celery>=5.4,<6"]
 celery-asyncio = ["celery-asyncio>=6.0.0a2; python_version >= '3.14'"]
+compat = [
+    "django>=5.2,<6.0",
+    "django-tasks>=0.12.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/oliverhaas/django-tasks-celery"
