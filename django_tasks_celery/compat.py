@@ -20,7 +20,7 @@ if find_spec("django.tasks"):
     from django.tasks.base import (
         TaskResult as BaseTaskResult,
     )
-    from django.tasks.exceptions import InvalidTaskBackend, TaskResultDoesNotExist
+    from django.tasks.exceptions import InvalidTask, InvalidTaskBackend, TaskResultDoesNotExist
     from django.tasks.signals import (
         task_enqueued,
         task_finished,
@@ -54,10 +54,11 @@ else:
             TaskResult as _TaskResultWithoutP,
         )
         from django_tasks.exceptions import (  # type: ignore[assignment,no-redef,unused-ignore]
-            InvalidTaskBackendError as InvalidTaskBackend,
+            InvalidTask,
+            TaskResultDoesNotExist,
         )
         from django_tasks.exceptions import (  # type: ignore[assignment,no-redef,unused-ignore]
-            TaskResultDoesNotExist,
+            InvalidTaskBackendError as InvalidTaskBackend,
         )
         from django_tasks.signals import (  # type: ignore[no-redef,unused-ignore]
             task_enqueued,
@@ -88,6 +89,7 @@ __all__ = [
     "TASK_MIN_PRIORITY",
     "BaseTaskBackend",
     "BaseTaskResult",
+    "InvalidTask",
     "InvalidTaskBackend",
     "Task",
     "TaskContext",

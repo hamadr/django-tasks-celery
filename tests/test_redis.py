@@ -11,9 +11,9 @@ from unittest.mock import patch
 
 import pytest
 from celery import Celery
-from django.tasks.base import TaskResultStatus
 
 from django_tasks_celery.backend import CeleryBackend
+from django_tasks_celery.compat import TaskResultStatus
 from django_tasks_celery.register import _django_task_registry
 from tests.tasks import async_task, context_task, failing_task, simple_task
 

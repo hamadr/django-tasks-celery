@@ -7,10 +7,10 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from celery import Celery
-from django.tasks.base import TaskResultStatus
-from django.tasks.exceptions import InvalidTask as InvalidTaskError
 
 from django_tasks_celery.backend import CeleryBackend
+from django_tasks_celery.compat import InvalidTask as InvalidTaskError
+from django_tasks_celery.compat import TaskResultStatus
 from django_tasks_celery.register import _django_task_registry
 from tests.tasks import high_priority_task, simple_task
 

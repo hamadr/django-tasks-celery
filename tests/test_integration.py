@@ -10,9 +10,9 @@ from __future__ import annotations
 from unittest.mock import patch
 
 import pytest
-from django.tasks.base import TaskResultStatus
 
 from django_tasks_celery.backend import CeleryBackend
+from django_tasks_celery.compat import TaskResultStatus
 from django_tasks_celery.register import _django_task_registry, ensure_celery_task
 from tests.tasks import async_task, context_task, failing_task, simple_task
 
